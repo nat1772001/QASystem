@@ -40,11 +40,13 @@ Phân công công việc:
     - Bình luận câu trả lời.
     - Xóa bình luận câu trả lời đã bình luận.
     - Xem danh sách câu hỏi đã đăng của người dùng.
--Tuấn:
+
+- Tuấn:
   + Thiết kế thực thể, cơ sở dữ liệu
   + Code phần Controller cho phần quản lý Fields(Lĩnh vực), phần tìm kiếm
   + Code hầu hết các views cho các controller
--Độ:
+
+- Độ:
   + thông tin người dùng đăng nhập
   + sửa thông tin người dùng đăng nhập
   + xem thông tin của tất cả các câu hỏi, sắp xếp danh sách câu hỏi theo các thuộc tính
