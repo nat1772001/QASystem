@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sửa thông tin lĩnh vực</title>
+<div th:replace="fragments :: html_ref"></div>
+</head>
+
+<body>
+    <nav th:replace="fragments :: nav_bar">Static Header</nav>
+
+    <div class="container-fluid pb-3" style="margin-top: 80px;">
+		<div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+			<div class="border-end rounded-3">
+				<div th:replace="fragments :: left_nav"></div>
+			</div>
+			<div class="bg-light border" >
+				<div class="container text-center mb-5">
+                    <div class="m-5">
+                        <h1>Sửa thông tin Lĩnh vực</h1>
+                    </div>
+             
+                    <form th:action="@{/fields/save}" method="post" th:object="${field}" 
+                        style="max-width: 600px; margin: 0 auto;">
+                        <div class="m-5">
+                            <div class="form-group row m-5">
+                                <label class="col-form-label col-4" for="">Mã lĩnh vực</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" th:field="*{id}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row m-5">
+                                <label class="col-form-label col-4" for="">Tên</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" th:field="*{name}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row m-5">
+                                <label class="col-form-label col-4" for="" >Mô tả</label>
+                                <div class="col-8">
+                                    <textarea type="text" class="form-control" th:field="*{description}" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div>
+                            <button type="submit" class="btn btn-secondary"><a href="/fields" style="color: #fff; text-decoration: none;">Hủy</a></button>
+                            <button type="submit" class="btn btn-primary">Sửa</button>
+                        </div>
+                    </form>
+                </div>
+			</div>
+		</div>
+    <div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

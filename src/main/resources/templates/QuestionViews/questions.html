@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Trang chủ</title>
+	<div th:replace="fragments :: html_ref"></div>
+
+</head>
+
+<body>
+	<nav th:replace="fragments :: nav_bar"></nav>
+
+	<div class="container-fluid pb-3" style="margin-top: 80px;">
+		<div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+			<div class="border-end rounded-3">
+				<div th:replace="fragments :: left_nav"></div>
+			</div>
+			<div class="bg-light border">
+				<form class="container">
+					<div class="mt-4 ms-3 me-3 mb-3">
+						<div class="btn-group" role="group" aria-label="Basic example">
+							<button type="button" class="btn btn-outline-secondary"><a class="text-decoration-none" th:href="@{list?field2=topquestion}">Top
+									Question</a></button>
+							<button type="button" class="btn btn-outline-secondary"><a class="text-decoration-none" th:href="@{list?field2=topfield}">Top
+									Field</a></button>
+						</div>
+						<table class="table" th:if="${condition}==false">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col"><a class="text-decoration-none" th:href="@{list?field=title}">Tên câu hỏi</a></th>
+									<th scope="col"><a class="text-decoration-none" th:href="@{list?field=content}">Nội dung</a></th>
+									<th scope="col"><a class="text-decoration-none" th:href="@{list?field=point}">Số điểm vote</a></th>
+									<th scope="col"><a class="text-decoration-none" th:href="@{list?field=user.name}">Người đặt câu hỏi</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="question, state:${questions}">
+									<th scope="row" th:text="${state.count}"></th>
+									<td th:text="${question.title}"></td>
+									<td th:text="${question.content}"></td>
+									<td th:text="${question.point}"></td>
+									<td th:text="${question.user.name}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table" th:if="${field2}==topquestion">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col"><a>Tên câu hỏi</a></th>
+									<th scope="col"><a>Nội dung</a></th>
+									<th scope="col"><a>Số điểm vote</a></th>
+									<th scope="col"><a>Người đặt câu hỏi</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="question, state:${questions}">
+									<th scope="row" th:text="${state.count}"></th>
+									<td th:text="${question.title}"></td>
+									<td th:text="${question.content}"></td>
+									<td th:text="${question.point}"></td>
+									<td th:text="${question.user.name}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table" th:if="${field2}==topfield">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col"><a>Tên câu hỏi</a></th>
+									<th scope="col"><a>Nội dung</a></th>
+									<th scope="col"><a>Số điểm vote</a></th>
+									<th scope="col"><a>Người đặt câu hỏi</a></th>
+									<th scope="col"><a>Chủ đề</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="question, state:${questions}">
+									<th scope="row" th:text="${state.count}"></th>
+									<td th:text="${question.title}"></td>
+									<td th:text="${question.content}"></td>
+									<td th:text="${question.point}"></td>
+									<td th:text="${question.user.name}"></td>
+									<td th:text="${question.field.name}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table" th:if="${field2}==topuser">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col"><a>Tên câu hỏi</a></th>
+									<th scope="col"><a>Nội dung</a></th>
+									<th scope="col"><a>Số điểm vote</a></th>
+									<th scope="col"><a>Người đặt câu hỏi</a></th>
+									<th scope="col"><a>Chủ đề</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="question, state:${questions}">
+									<th scope="row" th:text="${state.count}"></th>
+									<td th:text="${question.title}"></td>
+									<td th:text="${question.content}"></td>
+									<td th:text="${question.point}"></td>
+									<td th:text="${question.user.name}"></td>
+									<td th:text="${question.field.name}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

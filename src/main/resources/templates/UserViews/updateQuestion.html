@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Sửa thông tin lĩnh vực</title>
+	<div th:replace="fragments :: html_ref"></div>
+</head>
+
+<body>
+	<nav th:replace="fragments :: nav_bar">Static Header</nav>
+
+	<div class="container-fluid pb-3" style="margin-top: 80px;">
+		<div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+			<div class="border-end rounded-3">
+				<div th:replace="fragments :: left_nav"></div>
+			</div>
+			<div class="bg-light border">
+				<div class="container text-center mb-5">
+					<div class="m-5">
+						<h1>Sửa Câu hỏi</h1>
+					</div>
+
+					<form th:action="@{/user/questions/update}" method="post" th:object="${question}"
+						style="max-width: 600px; margin: 0 auto;">
+						<input type="hidden" th:field="*{id}" th:value="${question.id}" />
+						<div class="m-5">
+							<div class="form-group row m-5">
+								<label class="col-form-label col-4" for="">Tiêu đề</label>
+								<div class="col-8">
+									<input type="text" th:field="*{title}" th:value="${question.title}" /> 
+								</div>
+							</div>
+							<div class="form-group row m-5">
+								<label class="col-form-label col-4" for="">Nội dung</label>
+								<div class="col-8">
+									<textarea type="text" th:field="*{content}" th:value="${question.content}"></textarea>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<button type="submit" class="btn btn-secondary"><a href="/fields"
+									style="color: #fff; text-decoration: none;">Hủy</a></button>
+							<button type="submit" class="btn btn-primary">Sửa</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

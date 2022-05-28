@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments :: html_ref"></div>
+</head>
+
+<body>
+
+    <div th:fragment="addFieldModal">
+        <div class="modal fade" id="addFieldModal" tabindex="-1" aria-labelledby="addFieldModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{/fields/save}" th:object="${field}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addFieldModalLabel">Thêm lĩnh vực mới</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Tên lĩnh vực</label>
+                                <input type="text" class="form-control" th:field="*{name}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Mô tả</label>
+                                <textarea class="form-control" th:field="*{description}"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var addFieldModal = document.getElementById('addFieldModal')
+            addFieldModal.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var button = event.relatedTarget
+            })
+        </script>
+    </div>
+
+    <div th:fragment="addFieldQuestionModal">
+        <div class="modal fade" id="addFieldQuestionModal" tabindex="-1" aria-labelledby="addFieldQuestionModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{/fields/addQuestion}" th:object="${question}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addFieldQuestionModalLabel">Thêm câu hỏi mới</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <input type="hidden" name="idField" th:value="${field.id}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Tiêu đề</label>
+                                <input type="text" class="form-control" name="title"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Nội dung</label>
+                                <textarea class="form-control" name="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            var addFieldQuestionModal = document.getElementById('addFieldQuestionModal')
+            addFieldQuestionModal.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var button = event.relatedTarget
+            })
+        </script>
+    </div>
+
+    <div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

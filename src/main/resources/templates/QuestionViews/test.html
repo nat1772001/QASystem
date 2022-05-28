@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.0.2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.tiny.cloud/1/8hxnzcapxyh1yi5cano0nt6yo1ig592berl5zfjdf3hiuljh/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#editor',
+            skin: 'bootstrap',
+            plugins: 'lists, link, image, media',
+            toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+            menubar: false,
+        });
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="nav_bar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Hệ thống hỏi đáp online</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Nhập câu hỏi ở đây"
+                            aria-label="Search" size="50px">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </ul>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <span th:if="${user == null}">
+                        <button class="btn btn-outline-primary me-2" type="submit" width="20px"><a
+                                th:href="@{/loginProcess}">Đăng nhập</a></button>
+                        <button class="btn btn-primary" type="submit" width="20px"><a th:href="@{/register}"
+                                style="color: #fff;">Đăng ký</a></button>
+                    </span>
+                    <span th:unless="${user == null}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                style="width: 210px; text-align: right;">
+                                Chào <b th:text="${user.name}" style="width: 210px;"></b>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Đăng câu hỏi</a></li>
+                                <li><a class="dropdown-item" href="#">Sửa thông tin cá nhân</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/logoutProcess}">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    </span>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid pb-3" style="margin-top: 80px;">
+        <div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+            <div class="border-end rounded-3">
+                <div class="list-group">
+                    <a th:href="@{/fields}" class="list-group-item list-group-item">Lĩnh vực</a>
+                    <a href="#" class="list-group-item list-group-item">Câu hỏi</a>
+                    <a href="#" class="list-group-item list-group-item">Người dùng</a>
+                </div>
+            </div>
+            <div class="bg-light border">
+                <div class="d-grid gap-3" style="grid-template-columns: 0.2fr 2fr 0.2fr;">
+                    <div class="text-center m-3">
+                        <b class="text-center">Điểm</b>
+                        <button class="btn btn-primary mt-3">Vote</button>
+                    </div>
+                    <div>
+                        <div class="card">
+                            <div class="card-header">
+                                Tiêu đề câu hỏi
+                            </div>
+                            <div class="card-body">
+
+                                <p class="card-text">Nội dung câu hỏi</p>
+                                <small>đăng bởi <b>Ai</b> vào ngày <b>nào</b></small>
+                            </div>
+
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p>
+                                    <button class="btn" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        Bình luận <b>Số bình luận</b>
+                                    </button>
+                                </p>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <div th:each=" : ${}" class="d-grid" style="grid-template-columns: 2fr 0.1fr;">
+                                            <div class="d-grid gap-3" style="grid-template-columns: 0.5fr 2fr;">
+                                                <div>
+                                                    <b>Người bình luận</b>
+                                                </div>
+                                                <div>
+                                                    <p>Nội dung bình luận</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <a class="btn" href="#">Xóa</a>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                        <div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Bình luận cho câu hỏi"
+                                                    aria-describedby="button-addon2">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    id="button-addon2">Đăng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary mt-3">Sửa</button>
+                        <button class="btn btn-primary mt-3">Xóa</button>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <b>Số</b> câu trả lời
+                </div>
+                <div th:each=" : ${}">
+                    <div class="d-grid gap-3" style="grid-template-columns: 0.2fr 2fr 0.2fr;">
+                        <div class="text-center m-3">
+                            <b class="text-center">Điểm</b>
+                            <button class="btn btn-primary mt-3">Vote</button>
+                        </div>
+                        <div>
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <p class="card-text">Nội dung câu trả lời</p>
+                                    <small>đăng bởi <b>Ai</b> vào ngày <b>nào</b></small>
+                                </div>
+
+                            </div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <p>
+                                        <button class="btn" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseExample" aria-expanded="false"
+                                            aria-controls="collapseExample">
+                                            Bình luận <b>Số bình luận</b>
+                                        </button>
+                                    </p>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <div th:each=" : ${}" class="d-grid"
+                                                style="grid-template-columns: 2fr 0.1fr;">
+                                                <div class="d-grid gap-3" style="grid-template-columns: 0.5fr 2fr;">
+                                                    <div>
+                                                        <b>Người bình luận</b>
+                                                    </div>
+                                                    <div>
+                                                        <p>Nội dung bình luận</p>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <a class="btn" href="#">Xóa</a>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Bình luận cho câu hỏi"
+                                                        aria-describedby="button-addon2">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="button-addon2">Đăng</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary mt-3">Sửa</button>
+                            <button class="btn btn-primary mt-3">Xóa</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-4 mb-4">
+                    <!--Bootstrap classes arrange web page components into columns and rows in a grid -->
+                    <div class="row justify-content-md-center">
+                        <div class="">
+                            <h1 class="h2 mb-4">Submit issue</h1>
+                            <label>Describe the issue in detail</label>
+                            <div class="form-group">
+                                <textarea id="editor"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

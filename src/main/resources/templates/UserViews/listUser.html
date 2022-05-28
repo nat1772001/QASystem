@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Các lĩnh vực</title>
+	<div th:replace="fragments :: html_ref"></div>
+
+</head>
+
+<body>
+	<nav th:replace="fragments :: nav_bar">Static Header</nav>
+
+	<div class="container-fluid pb-3" style="margin-top: 80px;">
+		<div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+			<div class="border-end rounded-3">
+				<div th:replace="fragments :: left_nav"></div>
+			</div>
+			<div class="bg-light border">
+				<section class="row text-center">
+					<div class="col mt-4">
+						<div class="card">
+							<div class="car-header">
+								<h2 class="mt-5">Danh sách người dùng</h2>
+							</div>
+			
+							<div class="card-body">
+								<div class="alert alert-primary" role="alert">
+						<i th:text="${message}"></i>
+								</div>
+								<table class="table table-striped table-inverse">
+									<thead class="thead-inverse">
+										<tr>
+											<th></th>
+											<th>Name</th>
+											<th>Username</th>
+											<th>position</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="user:${list}">
+											<td><input type="checkbox" class="form-check-inline"></td>
+											<td th:text="${user.name}"></td>
+											<td th:text="${user.username}"></td>
+											<td th:text="${user.position}"></td>
+											<td>
+												<a th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-outline-danger">Xóa</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

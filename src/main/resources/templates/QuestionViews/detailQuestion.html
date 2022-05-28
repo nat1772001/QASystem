@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Trang chủ</title>
+	<div th:replace="fragments :: html_ref"></div>
+</head>
+
+<body>
+	<nav th:replace="fragments :: nav_bar"></nav>
+	<div class="container-fluid pb-3" style="margin-top: 80px;">
+		<div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+			<div class="border-end rounded-3">
+				<div th:replace="fragments :: left_nav"></div>
+			</div>
+			<div class="bg-light border">
+				<div class="d-grid gap-3" style="grid-template-columns: 0.2fr 2fr 0.2fr;">
+					<div class="text-center m-3">
+						<b class="text-center" th:text="${question.point}"></b>
+						<form th:action="@{/questions/vote}" method="post">
+							<input type="hidden" name="idQuestion" th:value="${question.id}" />
+							<button type="submit" class="btn btn-primary mt-3">Vote</button>
+						</form>
+					</div>
+					<div>
+						<div class="card">
+							<h2 class="card-header" th:text="${question.title}"></h2>
+							<div class="card-body">
+								<p class="card-text" th:text="${question.content}">Nội dung
+									câu hỏi</p>
+								<small>Đăng bởi <b th:text="${question.user.name}">Ai</b> Vào ngày <b
+										th:text="${question.createAt}"></b></small>
+							</div>
+						</div>
+						<ul class="list-group">
+							<li class="list-group-item">
+								<p>
+									<button class="btn" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseQuestionComment" aria-expanded="false"
+										aria-controls="collapseQuestionComment">
+										Bình luận <b th:text="${question.comments.size}"></b>
+									</button>
+								</p>
+								<div class="collapse" id="collapseQuestionComment">
+									<div class="card card-body">
+										<div th:each="commentQue:${question.comments}" class="d-grid"
+											style="grid-template-columns: 2fr 0.1fr;">
+											<div class="d-grid gap-3" style="grid-template-columns: 0.5fr 2fr;">
+												<div>
+													<b th:text="${commentQue.user.name}">Người bình luận</b>
+												</div>
+												<div>
+													<p th:text="${commentQue.content}">Nội dung bình luận</p>
+												</div>
+											</div>
+											<div class="text-right">
+												<span th:if="${userId == commentQue.user.id}">
+													<form method="post" th:action="@{/questions/comment/delete}">
+														<input type="hidden" name="idCommentQue"
+															th:value="${commentQue.id}" /> <input type="hidden"
+															name="idQuestion" th:value="${question.id}" />
+														<button type="submit" class="btn">Xóa</button>
+													</form>
+												</span>
+											</div>
+											<hr>
+										</div>
+										<div>
+											<form class="input-group mb-3" th:action="@{/questions/comment/add}"
+												method="post">
+												<input type="hidden" name="idQuestion" th:value="${question.id}" />
+												<input type="text" class="form-control"
+													placeholder="Bình luận cho câu hỏi" aria-describedby="button-addon2"
+													name="content">
+												<button class="btn btn-outline-secondary" type="submit"
+													id="button-addon2">Đăng</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div></div>
+				</div>
+				<div class="card-header">
+					<b th:text="${question.answers.size}">Số</b> Câu trả lời
+				</div>
+				<div th:each="answer:${question.answers}" class="mb-5">
+					<div class="d-grid gap-3" style="grid-template-columns: 0.2fr 2fr 0.2fr;">
+						<div class="text-center m-3">
+							<b class="text-center" th:text="${answer.point}">Đăng bởi</b>
+							<form method="post" th:action="@{/questions/answer/vote}">
+								<input type="hidden" name="idAnswer" th:value="${answer.id}" />
+								<input type="hidden" name="idQuestion" th:value="${question.id}" />
+								<button class="btn btn-primary mt-3">Vote</button>
+							</form>
+						</div>
+						<div>
+							<div class="card">
+								<div class="card-body">
+									<p class="card-text" th:utext="${answer.content}">Nội dung
+										câu trả lời</p>
+									<small>Đăng bởi <b th:text="${answer.user.name}">Ai</b> Vào
+										ngày <b th:text="${answer.createAt}">Nào</b></small>
+								</div>
+
+							</div>
+							<ul class="list-group">
+								<li class="list-group-item">
+									<p>
+										<button class="btn" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseExample" aria-expanded="false"
+											aria-controls="collapseExample">
+											Bình luận <b th:text="${answer.answerComments.size}"></b>
+										</button>
+									</p>
+									<div class="collapse" id="collapseExample">
+										<div class="card card-body">
+											<div th:each="commentAns:${answer.answerComments}" class="d-grid"
+												style="grid-template-columns: 2fr 0.1fr;">
+												<div class="d-grid gap-3" style="grid-template-columns: 0.5fr 2fr;">
+													<div>
+														<b th:text="${commentAns.user.name}">Người bình luận</b>
+													</div>
+													<div>
+														<p th:text="${commentAns.content}">Nội dung bình luận</p>
+													</div>
+												</div>
+												<div class="text-right">
+													<span th:if="${userId == commentAns.user.id}">
+														<form method="post"
+															th:action="@{/questions/answer/comment/delete}">
+															<input type="hidden" name="idCommentAns"
+																th:value="${commentAns.id}" /> <input type="hidden"
+																name="idQuestion" th:value="${question.id}" />
+															<button type="submit" class="btn">Xóa</button>
+														</form>
+													</span>
+												</div>
+												<hr>
+											</div>
+											<div>
+												<form class="input-group mb-3"
+													th:action="@{/questions/answer/comment/add}" method="post">
+													<input type="hidden" name="idQuestion" th:value="${question.id}" />
+													<input type="hidden" name="idAnswer" th:value="${answer.id}" />
+													<input type="text" class="form-control"
+														placeholder="Bình luận cho câu trả lời"
+														aria-describedby="button-addon2" name="content">
+													<button class="btn btn-outline-secondary" type="submit"
+														id="button-addon2">Đăng</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<span th:if="${userId == answer.user.id}">
+								<button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+									data-bs-target="#updateAns">Sửa</button>
+								<form method="post" th:action="@{/questions/answer/delete}">
+									<input type="hidden" name="idAnswer" th:value="${answer.id}" />
+									<input type="hidden" name="idQuestion" th:value="${question.id}" />
+									<button class="btn btn-primary mt-3" type="submit"
+										value="Delete Answer">Xóa</button>
+								</form>
+								<div class="modal fade" id="updateAns" tabindex="-1" aria-labelledby="addModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<form th:action="@{/questions/answer/update}" method="post">
+												<input type="hidden" name="idQuestion" th:value="${question.id}" />
+												<input type="hidden" name="idAnswer" th:value="${answer.id}" />
+												<div class="modal-header">
+													<h5 class="modal-title" id="addModalLabel"></h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="mb-3">
+														<label for="recipient-name" class="col-form-label"></label>
+														<input type="text" class="form-control" name="content"
+															th:value="${answer.content}" />
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-primary">Update</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="container mt-4 mb-4">
+					<!--Bootstrap classes arrange web page components into columns and rows in a grid -->
+					<div class="row justify-content-md-center">
+						<div>
+							<h1 class="h2 mb-4">Trả lời câu hỏi</h1>
+							<label>Điền câu trả lời của bạn vào đây</label>
+							<form method="post" th:action="@{/questions/answer}" th:object="${question}">
+								<input type="hidden" name="idQuestion" th:value="${question.id}" />
+								<div class="form-group">
+									<textarea id="editor" name="content"></textarea>
+								</div>
+								<button type="submit" class="btn btn-primary">Đăng</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<script>
+					var updateAnswer = document.getElementById('updateAnswer')
+					updateAnswer.addEventListener('show.bs.modal', function (event) {
+						// Button that triggered the modal
+						var button = event.relatedTarget
+					})
+				</script>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

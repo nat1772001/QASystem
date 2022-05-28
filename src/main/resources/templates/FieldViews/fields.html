@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Các lĩnh vực</title>
+	<div th:replace="fragments :: html_ref"></div>
+</head>
+
+<body>
+	<nav th:replace="fragments :: nav_bar">Static Header</nav>
+
+	<div class="container-fluid pb-3" style="margin-top: 80px;">
+		<div class="d-grid gap-3" style="grid-template-columns: 0.4fr 2fr;">
+			<div class="border-end rounded-3">
+				<div th:replace="fragments :: left_nav"></div>
+			</div>
+			<div class="bg-light border">
+				<div class="container">
+					<div class="mt-3">
+						<form class="d-flex" th:action="@{/fields}">
+							<input class="form-control me-2" type="search" placeholder="Nhập tên lĩnh vực ở đây"
+								aria-label="Search" name="keyword" th:value="${keyword}">
+							<button class="btn btn-outline-success" type="submit">Search</button>
+						</form>
+						<div th:if="${user != null}">
+							<div th:if="${user.position == 'admin'}">
+								<button type="button" class="btn btn-primary bg-dark mt-2" data-bs-toggle="modal"
+									data-bs-target="#addFieldModal">Thêm lĩnh vực</button>
+							</div>
+						</div>
+					</div>
+					<div class="mt-2 ms-3 me-3 mb-3">
+						<div class="list-group mt-2">
+							<div th:each="field : ${fields}" class="d-grid" style="grid-template-columns: 2fr 0.1fr">
+								<a th:href="@{'/fields/' + ${field.id}}" class="list-group-item list-group-item-action"
+									aria-current="true">
+									<div class="d-flex w-100 justify-content-between">
+										<h5 class="mb-1" th:text="${field.name}">List group item heading</h5>
+										<small><b th:text="${field.questions.size}">Số</b> câu hỏi</small>
+									</div>
+									<p class="mb-1" th:text="${field.description}">Some placeholder content in a
+										paragraph.</p>
+								</a>
+								<div th:if="${user != null}">
+									<div th:if="${user.position == 'admin'}">
+										<a th:href="@{'/fields/edit/' + ${field.id}}"
+											class="list-group-item list-group-item-action" aria-current="true">Sửa</a>
+										<a th:href="@{'/fields/delete/' + ${field.id}}"
+											class="list-group-item list-group-item-action" aria-current="true">Xóa</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="modals :: addFieldModal"></div>
+
+	<div th:replace="fragments :: script_ref"></div>
+</body>
+
+</html>

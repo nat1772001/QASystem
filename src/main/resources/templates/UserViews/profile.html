@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Thông tin tài khoản</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+	<!-- MDB -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+	<div class="container">
+		<div class="row d-flex justify-content-center">
+			<div class="col-md-10 mt-5 pt-5">
+				<div class="row z-depth-3">
+					<div class="col-sm-4 bg-info rounded-left">
+						<div class="card-block text-center text-white">
+							<i class="fas fa-user-tie fa-7x mt-5"></i>
+							<h2 class="font-weight-bold mt-4" th:text="${user.name}"></h2>
+							<p th:text="${user.position}"></p>
+							<a th:href="@{/user/edit}"><i class="far fa-edit fa-2x mb-4"></i></a>
+							
+						</div>
+					</div>
+					<div class="col-sm-8 bg-white rounded-right">
+						<h3 class="mt-3 text-center">Information</h3>
+						<hr class="badge-primary mt-0 w-25">
+						<div class="row">
+							<div class="col-sm-6">
+								<p class="font-weight-bold">Username:</p>
+								<h6 class="text-muted" th:text="${user.username}"></h6>
+							</div>
+							<div class="col-sm-6">
+								<p class="font-weight-bold">Phone:</p>
+								<h6 class="text-muted">0825124160</h6>
+							</div>
+						</div>
+						
+						<hr class="bg-primary">
+						<ul class="list-unstyled d-flex justify-content-center mt-4">
+							<li><a th:href="@{/}" class="btn">
+									Back
+								</a></li>
+							<li><a th:href="@{/user/edit}" class="btn">
+									edit profile
+								</a></li>
+						</ul>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
