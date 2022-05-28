@@ -37,7 +37,7 @@
 							<tbody>
 								<tr th:each="question, state:${questions}">
 									<th scope="row" th:text="${state.count}"></th>
-									<td th:text="${question.title}"></td>
+									<td> <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}"></a></td>
 									<td th:text="${question.content}"></td>
 									<td th:text="${question.point}"></td>
 									<td th:text="${question.user.name}"></td>
@@ -57,8 +57,8 @@
 							<tbody>
 								<tr th:each="question, state:${questions}">
 									<th scope="row" th:text="${state.count}"></th>
-									<td th:text="${question.title}"></td>
-									<td th:text="${question.content}"></td>
+									<td> <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}"></a></td>
+									<td th:utext="${question.content}"></td>
 									<td th:text="${question.point}"></td>
 									<td th:text="${question.user.name}"></td>
 								</tr>
@@ -78,8 +78,8 @@
 							<tbody>
 								<tr th:each="question, state:${questions}">
 									<th scope="row" th:text="${state.count}"></th>
-									<td th:text="${question.title}"></td>
-									<td th:text="${question.content}"></td>
+									<td> <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}"></a></td>
+									<td th:utext="${question.content}"></td>
 									<td th:text="${question.point}"></td>
 									<td th:text="${question.user.name}"></td>
 									<td th:text="${question.field.name}"></td>
@@ -100,8 +100,8 @@
 							<tbody>
 								<tr th:each="question, state:${questions}">
 									<th scope="row" th:text="${state.count}"></th>
-									<td th:text="${question.title}"></td>
-									<td th:text="${question.content}"></td>
+									<td> <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}"></a></td>
+									<td th:utext="${question.content}"></td>
 									<td th:text="${question.point}"></td>
 									<td th:text="${question.user.name}"></td>
 									<td th:text="${question.field.name}"></td>
