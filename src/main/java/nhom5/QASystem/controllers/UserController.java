@@ -37,11 +37,16 @@ public class UserController {
 		this.userService = userService;
 		this.questionService = questionService;
 	}
+
 // Phần của Độ
 	@GetMapping("/profile")
-	public String userInfo(Model model, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+	public String userInfo(Model model, @CookieValue(value = "userId", defaultValue = "-1") int userId,
+			@RequestParam(value = "message") Optional<String> message) {
 		User currentUser = userService.get(userId);
 		model.addAttribute("user", currentUser);
+		if (message.isPresent()) {
+			model.addAttribute("message", message.get());// phương thức get dùng để lấy dữ liệu kiểu Optional
+		}
 		return "./UserViews/profile";
 	}
 
@@ -56,7 +61,8 @@ public class UserController {
 	}
 
 	@PostMapping("/edit")
-	public String update(Model model, UserDTO dto, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
+	public ModelAndView update(ModelMap model, UserDTO dto,
+			@CookieValue(value = "userId", defaultValue = "-1") int userId) {
 		User user = userService.get(userId);
 		try {
 			if (!StringUtils.isEmpty(dto.getPassword())) {
@@ -74,14 +80,15 @@ public class UserController {
 			ex.printStackTrace();
 		}
 
-		return "redirect:/user/profile";
+		return new ModelAndView("redirect:/user/profile", model);
 	}
 
 	@GetMapping("/list")
 	// sử dụng optional vì biến message có thể có, có thể không có
-	public String list(ModelMap model, @RequestParam(value = "message") Optional<String> message) {
+	public String list(ModelMap model, @RequestParam(value = "message") Optional<String> message, @CookieValue(value = "userId", defaultValue = "-1") int userId) {
 		List<User> list = userService.listAllUser();
 		model.addAttribute("list", list);
+		model.addAttribute("user", userService.get(userId));
 		if (message.isPresent()) {
 			model.addAttribute("message", message.get());// phương thức get dùng để lấy dữ liệu kiểu Optional
 		}
